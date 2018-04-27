@@ -5,12 +5,16 @@
  */
 package gui;
 
+import business.Controller;
+
 /**
  *
  * @author 14202122
  */
 public class JFramePrincipal extends javax.swing.JFrame {
 
+    Controller controller = new Controller();
+    
     /**
      * Creates new form JFramePrincipal
      */
@@ -72,6 +76,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jrbCompleto.setText("Completo");
 
         jbtnCalcular.setText("Calcular");
+        jbtnCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbtnCalcularMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpnPrincipalLayout = new javax.swing.GroupLayout(jpnPrincipal);
         jpnPrincipal.setLayout(jpnPrincipalLayout);
@@ -168,6 +177,21 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtnCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCalcularMouseClicked
+        if(controller.validaFormulario(jrbCompleto.hasFocus(),
+                                    jtfNome.getText(), 
+                                    jtfCPF.getText(), 
+                                    jtfIdade.getText(), 
+                                    jtfNroDependentes.getText(), 
+                                    jtfContrPrevOficial.getText(), 
+                                    jtfTotRendimentos.getText())){
+            //controller vai cadastrar contribuinte com controller.cadastraContribuinte(PARAMS);
+            //controller.calculaIRPF(PARAMS);
+        }else{
+            //JOPTIONPANE(DEU TRETA NO FORM CARA)
+        }
+    }//GEN-LAST:event_jbtnCalcularMouseClicked
 
     /**
      * @param args the command line arguments
