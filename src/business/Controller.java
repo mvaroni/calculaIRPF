@@ -11,6 +11,7 @@ package business;
  */
 public class Controller {
     
+    
     public boolean validaFormulario(boolean completo,
                                     String  nome    , String cpf,
                                     String  idade   , String dependentes,
@@ -25,20 +26,23 @@ public class Controller {
                 int age = Integer.parseInt(idade);
                 if(age<18){return false;}
             }else{return false;}
-            
-            //CONTRIBUICAO E TOTAL DE RENDA . . .
-            if(contri.length()<1 || tot_rend.length()<1){return false;}
-            
-        }else{
-            
+        }
+        
+        //CONTRIBUICAO E TOTAL DE RENDA . . .
+        if(contri.length()<1 || tot_rend.length()<1 ){return false;}
+        else{
+            if(valida_numero(contri, false) && valida_numero(tot_rend, false)){
+                if(Integer.parseInt(contri)>Integer.parseInt(tot_rend)){return false;}
+            }
         }
         
         return true;
     }
     
     
-    
+    //VALIDA SE O TEXTO INFORMADO É NUMERICO . . .
     private boolean valida_numero(String numero, boolean isInt){
+        boolean mantissa = false;
         for(int x =0; x<numero.length();x++){
             switch(numero.charAt(x)){
                 case '0':   case '1': 
@@ -46,9 +50,12 @@ public class Controller {
                 case '4':   case '5': 
                 case '6':   case '7': 
                 case '8':   case '9': 
+                break;
                 default : 
                     if(isInt){return false;}
                     if(numero.charAt(x)!='.' || numero.charAt(x)!=','){return false;}
+                    if(mantissa){return false;}
+                    mantissa = true;
             }
         }
         return true;
