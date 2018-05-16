@@ -11,6 +11,25 @@ package business;
  */
 public class Controller {
     
+    public String calculaIRPF(boolean completo,
+                                    String  nome    , String cpf,
+                                    String  idade   , String dependentes,
+                                    String  contri  , String tot_rend){
+        
+        String response = "";
+        
+        if(validaFormulario(completo, nome, cpf, idade, dependentes, contri, tot_rend)){
+            Contribuinte contrib = new Contribuinte(nome, cpf,
+                                                    Integer.parseInt(idade), Integer.parseInt(dependentes),
+                                                    Double.parseDouble(contri), Double.parseDouble(tot_rend));
+            if(completo){
+                response = "";
+            }
+                    Calculos.calculaIRPF(completo, contrib);
+        }
+        
+        return response;
+    }
     
     public boolean validaFormulario(boolean completo,
                                     String  nome    , String cpf,

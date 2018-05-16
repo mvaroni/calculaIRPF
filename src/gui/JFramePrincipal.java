@@ -180,21 +180,17 @@ public class JFramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCalcularMouseClicked
-        //Passar esse IF pro controller
-        //Aqui só será chamado o método "calculaFormulario",
-        // desse modo podemos retornar um texto caso de erro ou de certo
-        if(controller.validaFormulario(jrbCompleto.isSelected(),
-                                       jtfNome.getText(), 
-                                       jtfCPF.getText(), 
-                                       jtfIdade.getText(), 
-                                       jtfNroDependentes.getText(), 
-                                       jtfContrPrevOficial.getText(), 
-                                       jtfTotRendimentos.getText())){
-            //controller vai cadastrar contribuinte com controller.cadastraContribuinte(PARAMS);
-            //controller.calculaIRPF(PARAMS);
-        }else{
-            JOptionPane.showMessageDialog(jpnPrincipal, "ERRO NO FORM", "MSG DE ERRO", JOptionPane.ERROR_MESSAGE);
-        }
+        //Calcula o IRPF
+        JOptionPane.showMessageDialog(jpnPrincipal,
+                                      "TITULO PARCIAL",
+                                      controller.calculaIRPF(jrbCompleto.isSelected(),
+                                                             jtfNome.getText(), 
+                                                             jtfCPF.getText(), 
+                                                             jtfIdade.getText(), 
+                                                             jtfNroDependentes.getText(), 
+                                                             jtfContrPrevOficial.getText(), 
+                                                             jtfTotRendimentos.getText()),
+                                      JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_jbtnCalcularMouseClicked
 
     /**
