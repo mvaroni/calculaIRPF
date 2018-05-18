@@ -15,10 +15,15 @@ import java.math.MathContext;
 public class Calculos {
     
     public static double calculaIRPF(boolean completo, Contribuinte contr){
+        System.out.println(" - - - C O N T A - - -");
         BigDecimal cpoficial = new BigDecimal(contr.getContr_prev_oficial(), MathContext.UNLIMITED);
         BigDecimal trendtos = new BigDecimal(contr.getTotal_rendimentos(), MathContext.UNLIMITED);
         
-        trendtos.subtract(cpoficial);
+        System.out.println( "CONTRIBUICAO OFICIAL = " + cpoficial.toString() +
+                            "TOTAL DE RENDIMENTOS = " + trendtos.toString());
+        trendtos = trendtos.subtract(cpoficial);
+        
+        System.out.println("PÓS SUBTRAÇÃO = " + trendtos.toString());
         
         double desc_unico = 0.95;
         if(completo){
@@ -41,16 +46,24 @@ public class Calculos {
             }
         }
         
-        trendtos.multiply(new BigDecimal(desc_unico, MathContext.UNLIMITED));
+         trendtos = trendtos.multiply(new BigDecimal(desc_unico, MathContext.UNLIMITED));
         
         if(trendtos.doubleValue() <= 12000) return 0;
         if(trendtos.doubleValue() < 24000){
-            trendtos.subtract(new BigDecimal(12000, MathContext.UNLIMITED));
-            return trendtos.multiply(new BigDecimal(0.15, MathContext.UNLIMITED)).doubleValue();
+            trendtos = trendtos.subtract(new BigDecimal(12000, MathContext.UNLIMITED));
+            return arredondar(trendtos.multiply(new BigDecimal(0.15, MathContext.UNLIMITED)).doubleValue());
         }
         
-        trendtos.subtract(new BigDecimal(24000, MathContext.UNLIMITED));
-        trendtos.multiply(new BigDecimal(1.275,MathContext.UNLIMITED));
-        return trendtos.add(new BigDecimal(1800, MathContext.UNLIMITED)).doubleValue();
+        trendtos = trendtos.subtract(new BigDecimal(24000, MathContext.UNLIMITED));
+        trendtos = trendtos.multiply(new BigDecimal(1.275,MathContext.UNLIMITED));
+        return arredondar(trendtos.add(new BigDecimal(1800, MathContext.UNLIMITED)).doubleValue());
+    }
+    
+    private static double arredondar(double valor) {
+        double arredondado = valor;
+        arredondado *= (Math.pow(10, 2));
+        arredondado = Math.ceil(arredondado);           
+        arredondado /= (Math.pow(10, 2));
+        return arredondado;
     }
 }

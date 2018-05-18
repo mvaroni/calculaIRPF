@@ -83,7 +83,4 @@ public class Contribuinte {
     public void setTotal_rendimentos(double total_rendimentos) {
         this.total_rendimentos = total_rendimentos;
     }
-    
-    
-    
 }

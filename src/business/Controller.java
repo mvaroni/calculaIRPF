@@ -19,13 +19,16 @@ public class Controller {
         String response = "";
         
         if(validaFormulario(completo, nome, cpf, idade, dependentes, contri, tot_rend)){
+            int val_idade       = valida_naturais(Integer.parseInt(idade));
+            int val_dependentes = valida_naturais(Integer.parseInt(dependentes));
+            
             Contribuinte contrib = new Contribuinte(nome, cpf,
-                                                    Integer.parseInt(idade), Integer.parseInt(dependentes),
+                                                    val_idade, val_dependentes,
                                                     Double.parseDouble(contri), Double.parseDouble(tot_rend));
             if(completo){
-                response = "";
+                return response = "Valor IRPF Completo\nR$" + Calculos.calculaIRPF(completo, contrib);
             }
-                    Calculos.calculaIRPF(completo, contrib);
+            Calculos.calculaIRPF(completo, contrib);
         }
         
         return response;
@@ -80,4 +83,8 @@ public class Controller {
         return true;
     }
     
+    private int valida_naturais(int idade){
+        if(idade<0) return 0;
+        return idade;       
+    }
 }
