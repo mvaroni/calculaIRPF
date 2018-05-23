@@ -24,7 +24,7 @@ public class NewEmptyJUnitTest {
         String response, test;
         test     = "0.0, 1066.5, 1022.63, 1037.25, 993.38, 31472.44";
         
-        //RESULTADO < 12.000
+        //RESULTADO <= 12.000
         Contribuinte contribuinte = new Contribuinte("Icaro", "08755548909", 60, 5, 500, 3_000);
         response = "" + Calculos.calculaIRPF(true, contribuinte);
         //60 ANOS, 2 DEPENDENTES, 500 CONTRIBUICAO, 20_000 RENDIMENTO
@@ -48,4 +48,23 @@ public class NewEmptyJUnitTest {
         assertEquals(test, response);
     }
     
+    @Test
+    public void calc_IRPF_Simplificado(){
+        String response, test;
+        test = "[0.0, 978.75, 31156.88]";
+        
+        //RESULTADO <= 12.000
+        Contribuinte contribuinte = new Contribuinte("Selenia", "08204637157", 100, 4_000);
+        response = "[" + Calculos.calculaIRPF(false, contribuinte);
+        
+        //RESULTADO < 24.000
+        Contribuinte contribuinte2 = new Contribuinte("Selenia", "08204637157", 500, 20_000);
+        response = response + ", " + Calculos.calculaIRPF(false, contribuinte2);
+        
+        //RESULTADO >= 24.000
+        Contribuinte contribuinte3 = new Contribuinte("Selenia", "08204637157", 500, 50_000);
+        response = response + ", " + Calculos.calculaIRPF(false, contribuinte3) + "]";
+        
+        assertEquals(test, response);
+    }
 }
