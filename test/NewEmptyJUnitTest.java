@@ -6,6 +6,7 @@
 
 import business.Calculos;
 import business.Contribuinte;
+import business.Controller;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,6 +19,8 @@ import static org.junit.Assert.*;
  * @author Cristian
  */
 public class NewEmptyJUnitTest {
+    
+    //CALCULOS . . .
     
     @Test
     public void calc_IRPF_Normal(){
@@ -66,5 +69,151 @@ public class NewEmptyJUnitTest {
         response = response + ", " + Calculos.calculaIRPF(false, contribuinte3) + "]";
         
         assertEquals(test, response);
+    }
+    
+    //FORMULARIO . . .
+    @Test
+    public void valida_formulario_completo(){
+         //(boolean completo,
+         //                           String  nome    , String cpf,
+         //                           String  idade   , String dependentes,
+         //                           String  contri  , String tot_rend)
+         
+        Controller controller = new Controller();
+        
+        //COM TODOS OS DADOS . . . (TRUE)
+        boolean b1_t = controller.validaFormulario(true   ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "4",
+                                                   "3500" , "5000");
+        
+        //SEM NOME  . . . (FALSE)
+        boolean b2_f = controller.validaFormulario(true   ,
+                                                   ""     , "88713400004",
+                                                   "45"   , "4",
+                                                   "3500" , "5000");
+        //SEM CPF   . . . (FALSE)
+        boolean b3_f = controller.validaFormulario(true   ,
+                                                   "Pedro", "",
+                                                   "45"   , "4",
+                                                   "3500" , "5000");
+        //CPF ERRADO . . . (FALSE)
+        boolean b4_f = controller.validaFormulario(true   ,
+                                                   "Pedro", "8874",
+                                                   "45"   , "4",
+                                                   "3500" , "5000");
+        //SEM IDADE . . . (FALSE)
+        boolean b5_f = controller.validaFormulario(true   ,
+                                                   "Pedro", "88713400004",
+                                                   ""     , "4",
+                                                   "3500" , "5000");
+        //IDADE = 0 . . . (FALSE)
+        boolean b6_f = controller.validaFormulario(true   ,
+                                                   "Pedro", "88713400004",
+                                                   "0"    , "4",
+                                                   "3500" , "5000");
+        //SEM DEPENDENTES . . . (FALSE)
+        boolean b7_f = controller.validaFormulario(true   ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "",
+                                                   "3500" , "5000");
+        //RENDIMENTO MENOR QUE CONTRIBUICAO . . . (FALSE)
+        boolean b8_f = controller.validaFormulario(true   ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "4",
+                                                   "5000" , "1000");
+        //SEM RENDIMENTO . . . (FALSE)
+        boolean b9_f = controller.validaFormulario(true   ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "4",
+                                                   "5000" , "");
+        //SEM CONTRIBUICAO . . . (FALSE)
+        boolean b10_f = controller.validaFormulario(true   ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "4",
+                                                   "" , "5000");
+        
+        boolean resposta = b1_t && !b2_f && !b3_f && !b4_f && !b5_f && 
+                          !b6_f && !b7_f && !b8_f && !b9_f && !b10_f;
+        assertEquals(true, resposta);
+    }
+    
+    @Test
+    public void valida_formulario_simplificado(){
+         //(boolean completo,
+         //                           String  nome    , String cpf,
+         //                           String  idade   , String dependentes,
+         //                           String  contri  , String tot_rend)
+         
+        Controller controller = new Controller();
+        
+        //COM TODOS OS DADOS . . . (TRUE)
+        boolean b1_t = controller.validaFormulario(false  ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "4",
+                                                   "3500" , "5000");
+        
+        //SEM NOME  . . . (TRUE)
+        boolean b2_t = controller.validaFormulario(false  ,
+                                                   ""     , "88713400004",
+                                                   "45"   , "4",
+                                                   "3500" , "5000");
+        //SEM CPF   . . . (TRUE)
+        boolean b3_t = controller.validaFormulario(false  ,
+                                                   "Pedro", "",
+                                                   "45"   , "4",
+                                                   "3500" , "5000");
+        //CPF ERRADO . . . (TRUE)
+        boolean b4_t = controller.validaFormulario(false  ,
+                                                   "Pedro", "8874",
+                                                   "45"   , "4",
+                                                   "3500" , "5000");
+        //SEM IDADE . . . (TRUE)
+        boolean b5_t = controller.validaFormulario(false  ,
+                                                   "Pedro", "88713400004",
+                                                   ""     , "4",
+                                                   "3500" , "5000");
+        //IDADE = 0 . . . (TRUE)
+        boolean b6_t = controller.validaFormulario(false  ,
+                                                   "Pedro", "88713400004",
+                                                   "0"    , "4",
+                                                   "3500" , "5000");
+        //SEM DEPENDENTES . . . (TRUE)
+        boolean b7_t = controller.validaFormulario(false  ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "",
+                                                   "3500" , "5000");
+        //RENDIMENTO MENOR QUE CONTRIBUICAO . . . (FALSE)
+        boolean b8_f = controller.validaFormulario(false  ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "4",
+                                                   "5000" , "1000");
+        //SEM RENDIMENTO . . . (FALSE)
+        boolean b9_f = controller.validaFormulario(false  ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "4",
+                                                   "5000" , "");
+        //SEM CONTRIBUICAO . . . (FALSE)
+        boolean b10_f = controller.validaFormulario(false ,
+                                                   "Pedro", "88713400004",
+                                                   "45"   , "4",
+                                                   ""     , "5000");
+        
+        boolean resposta = b1_t && b2_t &&  b3_t &&  b4_t &&  b5_t  && 
+                           b6_t && b7_t && !b8_f && !b9_f && !b10_f;
+        assertEquals(true, resposta);
+    }
+    
+    @Test
+    public void mensagem_resultado_calculo_IRPF_sucesso(){
+        Controller controller = new Controller();
+        String resposta = controller.calculaIRPF(true, "Icaro", "08755548909", "60", "2", "500", "20000");
+        assertEquals("Valor IRPF Completo\nR$" + "1066.5", resposta);
+    }
+    @Test
+    public void mensagem_resultado_calculo_IRPF_erro(){
+        Controller controller = new Controller();
+        String resposta = controller.calculaIRPF(true, "", "", "", "", "500", "20000");
+        assertEquals("Erro! Verifique as informações preenchidas.", resposta);
     }
 }

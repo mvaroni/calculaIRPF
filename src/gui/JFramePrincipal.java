@@ -182,7 +182,6 @@ public class JFramePrincipal extends javax.swing.JFrame {
     private void jbtnCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnCalcularMouseClicked
         //Calcula o IRPF
         JOptionPane.showMessageDialog(jpnPrincipal,
-                                      "TITULO PARCIAL",
                                       controller.calculaIRPF(jrbCompleto.isSelected(),
                                                              jtfNome.getText(), 
                                                              jtfCPF.getText(), 
@@ -190,6 +189,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
                                                              jtfNroDependentes.getText(), 
                                                              jtfContrPrevOficial.getText(), 
                                                              jtfTotRendimentos.getText()),
+                                      "ALERTA",
                                       JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_jbtnCalcularMouseClicked
 

@@ -26,12 +26,13 @@ public class Controller {
                                                     val_idade, val_dependentes,
                                                     Double.parseDouble(contri), Double.parseDouble(tot_rend));
             if(completo){
-                return response = "Valor IRPF Completo\nR$" + Calculos.calculaIRPF(completo, contrib);
+                return response = "Valor IRPF Completo\nR$"     + Calculos.calculaIRPF(completo, contrib);
+            }else{
+                return response = "Valor IRPF Simplificado\nR$" + Calculos.calculaIRPF(completo, contrib);
             }
-            Calculos.calculaIRPF(completo, contrib);
         }
         
-        return response;
+        return "Erro! Verifique as informações preenchidas.";
     }
     
     public boolean validaFormulario(boolean completo,
